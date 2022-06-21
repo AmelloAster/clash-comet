@@ -1,0 +1,20 @@
+{
+	"pluginSearchDirs": ["."],
+	"useTabs": true,
+	"tabWidth": 2,
+	"printWidth": 100,
+	"singleQuote": true,
+	"trailingComma": "none",
+	"bracketSameLine": false,
+	"semi": true,
+	"quoteProps": "consistent",
+	"importOrder": [
+		"^@cc/core/(.*)$",
+		"^@cc/interface/(.*)$",
+		"^@cc/client/(.*)$",
+		"^@cc/ui/(.*)$",
+		"^[./]"
+	],
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true
+}
