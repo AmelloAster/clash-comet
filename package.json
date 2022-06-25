@@ -3,8 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"ui": "pnpm -F @cc/ui storybook ",
-		"cz": "pnpm pretty-quick && git add -A && git cz"
+		"ui": "pnpm -F @cc/ui storybook "
 	},
 	"devDependencies": {
 		"@babel/core": "^7.18.2",
