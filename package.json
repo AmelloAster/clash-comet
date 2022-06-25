@@ -2,11 +2,20 @@
 	"name": "clash-comet",
 	"version": "0.0.0",
 	"private": true,
+	"scripts": {
+		"ui": "pnpm -F @cc/ui storybook ",
+		"cz": "pnpm pretty-quick && git add -A && git cz"
+	},
 	"devDependencies": {
 		"@babel/core": "^7.18.2",
 		"@babel/preset-react": "^7.17.12",
 		"@trivago/prettier-plugin-sort-imports": "^3.2.0",
+		"eslint": "^8.18.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
 		"prettier": "^2.6.2",
-		"prettier-plugin-tailwindcss": "^0.1.11"
+		"prettier-plugin-tailwindcss": "^0.1.11",
+		"pretty-quick": "^3.1.3",
+		"turbo": "^1.3.1",
+		"typescript": "^4.7.4"
 	}
 }

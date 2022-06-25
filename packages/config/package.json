@@ -2,8 +2,5 @@
 	"name": "@cc/config",
 	"version": "0.0.0",
 	"main": "index.js",
-	"license": "GPL-3.0-only",
-	"files": [
-		"eslint-preset.js"
-	]
+	"license": "GPL-3.0-only"
 }
