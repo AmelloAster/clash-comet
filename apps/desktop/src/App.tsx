@@ -1,45 +1,78 @@
-import { useState } from 'react';
+import { BaseTransport } from '@cc/client';
+// import types from Spacedrive core (TODO: re-export from client would be cleaner)
+import { ClientCommand, ClientQuery } from '@cc/core';
+// import Spacedrive interface
+import ClashCometInterface, { Platform } from '@cc/interface';
+// import tauri apis
+import { dialog, invoke, os, shell } from '@tauri-apps/api';
+import { Event, listen } from '@tauri-apps/api/event';
+import { convertFileSrc } from '@tauri-apps/api/tauri';
+import { appWindow } from '@tauri-apps/api/window';
+import { useEffect, useState } from 'react';
 
-import './App.css';
-import logo from './logo.svg';
+import '@cc/ui/style';
+
+class Transport extends BaseTransport {
+	constructor() {
+		super();
+	}
+	async query(query: ClientQuery) {
+		return await invoke('client_query_transport', { data: query });
+	}
+	async command(query: ClientCommand) {
+		return await invoke('client_command_transport', { data: query });
+	}
+}
 
 function App() {
-	const [count, setCount] = useState(0);
+	function getPlatform(platform: string): Platform {
+		switch (platform) {
+			case 'darwin':
+				return 'macOS';
+			case 'win32':
+				return 'windows';
+			case 'linux':
+				return 'linux';
+			default:
+				return 'browser';
+		}
+	}
+	const [platform, setPlatform] = useState<Platform>('macOS');
+	const [focused, setFocused] = useState(true);
+
+	useEffect(() => {
+		os.platform().then((platform) => setPlatform(getPlatform(platform)));
+		invoke('app_ready');
+	}, []);
+
+	useEffect(() => {
+		const unlistenFocus = listen('tauri://focus', () => setFocused(true));
+		const unlistenBlur = listen('tauri://blur', () => setFocused(false));
+
+		return () => {
+			unlistenFocus.then((unlisten) => unlisten());
+			unlistenBlur.then((unlisten) => unlisten());
+		};
+	}, []);
 
 	return (
-		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<p>Hello Vite + React!</p>
-				<p>
-					<button type="button" onClick={() => setCount((count) => count + 1)}>
-						count is: {count}
-					</button>
-				</p>
-				<p>
-					Edit <code>App.tsx</code> and save to test HMR updates.
-				</p>
-				<p>
-					<a
-						className="App-link"
-						href="https://reactjs.org"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Learn React
-					</a>
-					{' | '}
-					<a
-						className="App-link"
-						href="https://vitejs.dev/guide/features.html"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Vite Docs
-					</a>
-				</p>
-			</header>
-		</div>
+		<ClashCometInterface
+			transport={new Transport()}
+			platform={platform}
+			convertFileSrc={function (url: string): string {
+				return convertFileSrc(url);
+			}}
+			openDialog={function (options: {
+				directory?: boolean | undefined;
+			}): Promise<string | string[] | null> {
+				return dialog.open(options);
+			}}
+			isFocused={focused}
+			onClose={() => appWindow.close()}
+			onFullscreen={() => appWindow.setFullscreen(true)}
+			onMinimize={() => appWindow.minimize()}
+			onOpen={(path: string) => shell.open(path)}
+		/>
 	);
 }
 
