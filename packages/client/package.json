@@ -1,0 +1,39 @@
+{
+	"name": "@cc/client",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./src/index.ts",
+	"files": [
+		"dist/**"
+	],
+	"scripts": {
+		"test": "jest",
+		"dev": "tsc -w",
+		"build": "tsc",
+		"lint": "TIMING=1 eslint src --fix",
+		"clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.9",
+		"scripts": "*",
+		"tsconfig": "*",
+		"typescript": "^4.7.2"
+	},
+	"jest": {
+		"preset": "scripts/jest/node"
+	},
+	"dependencies": {
+		"@cc/config": "workspace:*",
+		"@cc/core": "workspace:*",
+		"eventemitter3": "^4.0.7",
+		"i18next": "^21.8.10",
+		"immer": "^9.0.14",
+		"react-i18next": "^11.17.2",
+		"react-query": "^3.39.1",
+		"zustand": "4.0.0-rc.1"
+	},
+	"peerDependencies": {
+		"react": "^18.0.0",
+		"react-query": "^3.34.19"
+	}
+}
