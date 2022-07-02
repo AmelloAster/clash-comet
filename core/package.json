@@ -1,0 +1,17 @@
+{
+	"name": "@cc/core",
+	"version": "0.0.0",
+	"main": "index.js",
+	"license": "GPL-3.0-only",
+	"scripts": {
+		"codegen": "cargo test && ts-node ./scripts/bindingsIndex.ts",
+		"build": "cargo build",
+		"test": "cargo test",
+		"test:log": "cargo test -- --nocapture"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.36",
+		"ts-node": "^10.8.0",
+		"typescript": "^4.7.2"
+	}
+}
