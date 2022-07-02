@@ -4,13 +4,18 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 
 import { AppProps, AppPropsContext } from './AppPropsContext';
+import { AppRouter } from './AppRouter';
 import { ErrorFallback } from './ErrorFallback';
 
 const queryClient = new QueryClient();
 
 function RouterContainer() {
 	// useCoreEvents();
-	return <MemoryRouter>111</MemoryRouter>;
+	return (
+		<MemoryRouter>
+			<AppRouter />
+		</MemoryRouter>
+	);
 }
 
 export default function App(props: AppProps) {

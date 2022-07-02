@@ -3,7 +3,8 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"ui": "pnpm -F @cc/ui storybook "
+		"desktop": "pnpm --filter @cc/desktop --",
+		"ui": "pnpm --filter @cc/ui -- "
 	},
 	"devDependencies": {
 		"@babel/core": "^7.18.2",
