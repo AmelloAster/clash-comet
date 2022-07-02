@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
+
+import './Button.scss';
 
 const sizes = {
 	default: 'py-1 px-3 text-md font-medium',
@@ -101,6 +103,7 @@ export interface ButtonBaseProps {
 	variant?: ButtonVariant;
 	size?: ButtonSize;
 	loading?: boolean;
+	disabled?: boolean;
 	icon?: ReactNode;
 	noPadding?: boolean;
 	noBorder?: boolean;
@@ -130,12 +133,27 @@ export const Button = forwardRef<
 	ButtonProps | LinkButtonProps
 >(
 	(
-		{ loading, justifyLeft, className, pressEffect, noBorder, noPadding, size, variant, ...props },
+		{
+			loading,
+			disabled,
+			justifyLeft,
+			className,
+			pressEffect,
+			noBorder,
+			noPadding,
+			size,
+			variant,
+			...props
+		},
 		ref
 	) => {
 		className = clsx(
 			'border rounded-md items-center transition-colors duration-100 cursor-default',
-			{ 'opacity-5': loading, '!p-1': noPadding },
+			{
+				'opacity-5': loading || disabled,
+				'!p-1': noPadding,
+				'pointer-events-none': loading || disabled
+			},
 			{ 'justify-center': !justifyLeft },
 			sizes[size || 'default'],
 			variants[variant || 'default'],
@@ -144,20 +162,28 @@ export const Button = forwardRef<
 			className
 		);
 
-		return hasHref(props) ? (
-			<a {...props} ref={ref as any} className={clsx(className, 'no-underline')}>
+		const buttonContent = useMemo(() => {
+			const className = loading ? 'opacity-0 visible-hidden' : '';
+			return (
 				<>
-					{props.icon}
-					{props.children}
+					<span className={className}>{props.icon}</span>
+					<span className={className}>{props.children}</span>
 				</>
-			</a>
-		) : (
-			<button {...(props as ButtonProps)} ref={ref as any} className={className}>
-				<>
-					{props.icon}
-					{props.children}
-				</>
-			</button>
+			);
+		}, [loading, props.icon, props.children]);
+
+		return (
+			<div className={clsx('cc-btn inline-block', { loading: loading })}>
+				{hasHref(props) ? (
+					<a {...props} ref={ref as any} className={clsx(className, 'no-underline')}>
+						{buttonContent}
+					</a>
+				) : (
+					<button {...(props as ButtonProps)} ref={ref as any} className={className}>
+						{buttonContent}
+					</button>
+				)}
+			</div>
 		);
 	}
 );
