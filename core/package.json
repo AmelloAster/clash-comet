@@ -11,6 +11,10 @@
 	},
 	"devDependencies": {
 		"@types/node": "^17.0.36",
+		"adm-zip": "^0.5.9",
+		"fs-extra": "^10.1.0",
+		"https-proxy-agent": "^5.0.1",
+		"node-fetch": "^3.2.6",
 		"ts-node": "^10.8.0",
 		"typescript": "^4.7.2"
 	}
