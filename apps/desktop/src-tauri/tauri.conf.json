@@ -14,6 +14,10 @@
 		"allowlist": {
 			"all": true
 		},
+		"systemTray": {
+			"iconPath": "icons/icon.png",
+			"iconAsTemplate": true
+		},
 		"bundle": {
 			"active": true,
 			"category": "DeveloperTool",
@@ -38,7 +42,8 @@
 				"providerShortName": null,
 				"signingIdentity": null
 			},
-			"resources": [],
+			"resources": ["resources"],
+			"externalBin": ["sidecar/clash", "sidecar/clash-meta"],
 			"shortDescription": "",
 			"targets": "all",
 			"windows": {
@@ -58,8 +63,11 @@
 				"fullscreen": false,
 				"height": 600,
 				"resizable": true,
-				"title": "ClashComet",
-				"width": 800
+				"title": "Clash Comet",
+				"width": 800,
+				"transparent": true,
+				"minWidth": 600,
+				"minHeight": 520
 			}
 		]
 	}
