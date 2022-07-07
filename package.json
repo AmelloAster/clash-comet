@@ -4,7 +4,8 @@
 	"private": true,
 	"scripts": {
 		"desktop": "pnpm --filter @cc/desktop --",
-		"ui": "pnpm --filter @cc/ui -- "
+		"ui": "pnpm --filter @cc/ui -- ",
+		"check": "node core/scripts/check.mjs"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.18.2",
